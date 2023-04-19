@@ -106,7 +106,7 @@ public class GameManager extends JPanel {
 	}
 
 	public void initEnemy() {
-		if (plane.getScore() < 0) {
+		if (plane.getScore() < 1000) {
 			for (int i = 0; i < 6; i++) {
 				arrEnemy.add(new Enemy());
 			}
