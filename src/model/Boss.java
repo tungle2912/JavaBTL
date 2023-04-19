@@ -17,7 +17,7 @@ public class Boss extends Enemy {
 		img = Load.getImage("boss.png");
 		x = Constants.w_Frame / 2 - img.getWidth(null) / 2;
 		y = 0;
-		hp = 10;
+		hp = 100;
 		countmove = 0;
 	}
 
