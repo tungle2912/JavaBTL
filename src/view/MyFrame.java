@@ -11,13 +11,13 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import controller.*;
-import untils.Container;
-import untils.Load;
+import utils.Constants;
+import utils.Load;
 
 public class MyFrame extends JFrame{
 	 public MyFrame() {
 	        setTitle("air attack");
-	        setSize(Container.w_Frame,Container.H_Frame);
+	        setSize(Constants.w_Frame,Constants.H_Frame);
 	        setLocationRelativeTo(null);
 	        setResizable(false);
 	        setDefaultCloseOperation(EXIT_ON_CLOSE);

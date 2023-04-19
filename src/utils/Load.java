@@ -1,4 +1,4 @@
-package untils;
+package utils;
 
 import java.awt.Image;
 import java.io.File;

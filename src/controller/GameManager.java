@@ -23,8 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import model.*;
-import untils.Container;
-import untils.Load;
+import utils.Constants;
+import utils.Load;
 
 public class GameManager extends JPanel {
 	private Image backGround;
@@ -43,11 +43,12 @@ public class GameManager extends JPanel {
 		initGame();
 		Thread t = new Thread(run);
 		t.start();
-		gameListenner Listenner = new gameListenner(this);
+		GameListenner Listenner = new GameListenner(this);
 		this.addMouseListener(Listenner);
 		this.addMouseMotionListener(Listenner);
 		this.addKeyListener(Listenner);
 		setFocusable(true); 
+		
 	}
 
 	public void initGame() {
@@ -66,7 +67,7 @@ public class GameManager extends JPanel {
 	protected void paintComponent(Graphics g) {
 //		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawImage(backGround, 0, 0, Container.w_Frame, Container.H_Frame, null);
+		g2d.drawImage(backGround, 0, 0, Constants.w_Frame, Constants.H_Frame, null);
 		for (Enemy enemy : arrEnemy) {
 			enemy.draw(g2d);
 		}
@@ -83,8 +84,10 @@ public class GameManager extends JPanel {
 
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("arial", Font.BOLD, 30));
-		g2d.drawString("Hp " + plane.getHp(), 180, 50);
+		g2d.drawString("Hp " + plane.getHp(), 190, 50);
 	}
+	
+
 
 	public Plane getPlane() {
 		return plane;
@@ -103,7 +106,7 @@ public class GameManager extends JPanel {
 	}
 
 	public void initEnemy() {
-		if (plane.getScore() < 1000) {
+		if (plane.getScore() < 0) {
 			for (int i = 0; i < 6; i++) {
 				arrEnemy.add(new Enemy());
 			}
@@ -141,9 +144,9 @@ public class GameManager extends JPanel {
 		}
 		win = new JLabel();
 		win.setLayout(new BorderLayout());
-		win.setBounds(0, 0,Container.w_Frame, Container.H_Frame);
+		win.setBounds(0, 0,Constants.w_Frame, Constants.H_Frame);
 		JLabel background = new JLabel(image);
-		background.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
+		background.setBounds(0, 0,Constants.w_Frame, Constants.H_Frame);
 		win.add(background, BorderLayout.CENTER);
 		add(win);
 		
@@ -158,7 +161,7 @@ public class GameManager extends JPanel {
 //		}
 		JOptionPane pane = new JOptionPane("Do you want to replay ?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 		JDialog dialog = pane.createDialog(null, "You Win");
-		dialog.setLocation(500, 500);
+		dialog.setLocation(Constants.w_Frame/2-pane.getWidth()/2,Constants.H_Frame-200);
 		dialog.setVisible(true);
 		if (pane.getValue().equals(JOptionPane.YES_OPTION)) {
 			remove(win);
@@ -166,8 +169,6 @@ public class GameManager extends JPanel {
 		} else {
 			System.exit(0);
 		}
-
-
 	}
 
 	public void AI() {
@@ -178,6 +179,11 @@ public class GameManager extends JPanel {
 		}
 		if(checkwin) {
 			completeGame();
+		}
+		for(int i=0;i<arrEnemy.size();i++) {
+			if(arrEnemy.get(i).disappear()) {
+				arrEnemy.remove(i);
+			}
 		}
 		for (int i = 0; i < arrEnemy.size(); i++) {
 			arrEnemy.get(i).move();
@@ -203,7 +209,7 @@ public class GameManager extends JPanel {
 				Rectangle rect = arrEnemy.get(i).getRect().intersection(arrBullet.get(j).getRect());
 				if (rect.isEmpty() == false) {
 					if (arrEnemy.get(i) instanceof Boss) {
-						arrEnemy.get(i).moveup();
+						arrEnemy.get(i).setX(arrEnemy.get(i).getX()-5);;
 						arrBullet.remove(j);
 						if(arrEnemy.get(i).die()) {
 							win();
@@ -228,8 +234,8 @@ public class GameManager extends JPanel {
 		}
 
 		for (int i = 0; i < arrBoom.size(); i++) {
-			boolean check = arrBoom.get(i).move();
-			if (check) {
+		arrBoom.get(i).move();
+			if (arrBoom.get(i).disappear()) {
 				arrBoom.remove(i);
 			} else {
 				Rectangle r = arrBoom.get(i).getRect().intersection(plane.getRect());
@@ -243,7 +249,8 @@ public class GameManager extends JPanel {
 			}
 		}
 		for (int i = 0; i < arrBullet.size(); i++) {
-			if (arrBullet.get(i).move()) {
+			arrBullet.get(i).move();
+			if (arrBullet.get(i).disappear()) {
 				arrBullet.remove(i);
 			}
 		}

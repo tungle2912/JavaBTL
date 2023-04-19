@@ -4,9 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 
-import untils.Load;
+import utils.Load;
 
-public class Bullet {
+public class Bullet implements IGame{
 	private int x;
 	private int y;
 	private Image image;
@@ -17,15 +17,21 @@ public class Bullet {
 		this.y = y;
 		this.speed=10;
 	}
-	public boolean move() {
+	@Override
+	public void move() {
 		y-=speed;
-		return y<0;
 	}
+	@Override
 	public void draw(Graphics2D g2d) {
 		g2d.drawImage(image,x,y,null);
 	}
+	@Override
 	public Rectangle getRect() {
 		return new Rectangle(x,y,image.getWidth(null),image.getHeight(null));
+	}
+	@Override
+	public boolean disappear() {
+		return y<0;
 	}
 	
 	

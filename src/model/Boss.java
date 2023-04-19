@@ -6,24 +6,19 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
-import untils.Container;
-import untils.Load;
+import utils.Constants;
+import utils.Load;
 
 public class Boss extends Enemy {
-	private Image img;
-	private int x;
-	private int y;
-	private int hp;
-	private int count;
+
 	private int countmove;
-	private int speedX;
-	private int speedY;
 
 	public Boss() {
 		img = Load.getImage("boss.png");
-		x = Container.w_Frame/2 -img.getWidth(null)/2;
+		x = Constants.w_Frame / 2 - img.getWidth(null) / 2;
 		y = 0;
-		hp = 100;
+		hp = 10;
+		countmove = 0;
 	}
 
 	public void draw(Graphics2D g2d) {
@@ -36,32 +31,26 @@ public class Boss extends Enemy {
 	}
 
 	public void move() {
-		Random r=new Random();
+		Random r = new Random();
 		if (countmove >= 200) {
-			speedX = r.nextInt(10)-5;
-			speedY =r.nextInt(10)-5;
+			speedX = r.nextInt(8) - 5;
+			speedY = r.nextInt(8) - 5;
 			countmove = 0;
 		} else {
 			countmove++;
 		}
 		x += speedX;
 		y += speedY;
-		if (x < 0 ) {
+		if (x < 0) {
 			speedX = Math.abs(speedX);
 		}
-		if(x > Container.w_Frame-img.getWidth(null) ) {
+		if (x > Constants.w_Frame - img.getWidth(null)) {
 			speedX = -Math.abs(speedX);
 		}
-		if (y < 0 || y > Container.H_Frame / 2) {
+		if (y < 0 || y > Constants.H_Frame / 2) {
 			speedY = -speedY;
 		}
 	}
-	public void moveup() {
-		for(int i=0;i<15;i++) {
-			x-=1;
-		}
-	}
-	
 
 	public int getHp() {
 		return hp;
@@ -79,9 +68,9 @@ public class Boss extends Enemy {
 		count = 0;
 		int x1 = x + img.getWidth(null) / 2;
 		int y1 = y + img.getHeight(null) / 2;
-		arrBoom.add(new Boom(x1 - 40, y1+50));
-		arrBoom.add(new Boom(x1, y1+40));
-		arrBoom.add(new Boom(x1 + 40, y1+50));
+		arrBoom.add(new Boom(x1 - 40, y1 + 50));
+		arrBoom.add(new Boom(x1, y1 + 40));
+		arrBoom.add(new Boom(x1 + 40, y1 + 50));
 	}
 
 	public Rectangle getRect() {

@@ -7,15 +7,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import untils.Container;
-import untils.Load;
+import utils.Constants;
+import utils.Load;
 
-public class gameListenner extends MouseAdapter implements MouseMotionListener, MouseListener, KeyListener {
+public class GameListenner extends MouseAdapter implements MouseMotionListener, MouseListener, KeyListener {
 	GameManager manager;
 	private long lastFireTime;
 	private long fireDelay;
 
-	public gameListenner(GameManager gamemanager) {
+	public GameListenner(GameManager gamemanager) {
 		manager = gamemanager;
 		lastFireTime = 0;
 		fireDelay = 200;
@@ -68,6 +68,14 @@ public class gameListenner extends MouseAdapter implements MouseMotionListener, 
 			manager.getPlane().moveUp();
 			break;
 		}
+//		case KeyEvent.VK_SPACE: {
+//			manager.setCheckRun(!manager.isCheckRun());;
+//			break;
+//		}
+//		case KeyEvent.VK_W: {
+//			manager.getPlane().moveUp();
+//			break;
+//		}
 		case KeyEvent.VK_ENTER: {
 			long currentTime = System.currentTimeMillis();
 			if (currentTime - lastFireTime >= fireDelay) {
