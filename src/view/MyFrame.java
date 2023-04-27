@@ -14,31 +14,47 @@ import controller.*;
 import utils.Constants;
 import utils.Load;
 
-public class MyFrame extends JFrame{
-	 public MyFrame() {
-	        setTitle("air attack");
-	        setSize(Constants.w_Frame,Constants.H_Frame);
-	        setLocationRelativeTo(null);
-	        setResizable(false);
-	        setDefaultCloseOperation(EXIT_ON_CLOSE);
-	        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	        setIconImage(Load.getImage("spaceship.png"));
-	        Startview starview=new Startview();
-	        this.add(starview);
-	        starview.getBtnPlay().addActionListener( new ActionListener() {  
-				@Override
-				public void actionPerformed(ActionEvent e) {
-				    GameManager g = new GameManager();
-					add(g);
-					starview.getBtnPlay().setVisible(false);
-					repaint();
-					revalidate();
-					BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-					Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
-					setCursor(blankCursor);
+public class MyFrame extends JFrame {
+	public MyFrame() {
+		setTitle("air attack");
+		setSize(Constants.w_Frame, Constants.H_Frame);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setIconImage(Load.getImage("spaceship.png"));
+		Startview startview = new Startview();
+		this.add(startview);
+		startview.getBtnPlay().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Constants.timeStart = System.currentTimeMillis();
+				if (startview.getEasyRadioButton().isSelected()) {
+					Constants.hp_boss = 50;
+					Constants.speedBullet = 4;
+					Constants.scoreCreatBoss = 1000;
+				} else if (startview.getMediumRadioButton().isSelected()) {
+					Constants.hp_boss = 100;
+					Constants.speedBullet = 5;
+					Constants.scoreCreatBoss = 1500;
+				} else {
+					Constants.hp_boss = 150;
+					Constants.speedBullet = 6;
+					Constants.scoreCreatBoss = 2000;
 				}
+				MyPanel g = new MyPanel();
+				add(g);
+				remove(startview);
+				startview.getBtnPlay().setVisible(false);
+				repaint();
+				revalidate();
+				BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+				Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0),
+						"blank cursor");
+				setCursor(blankCursor);
+			}
 
-			});
-	    }
+		});
+	}
 
 }

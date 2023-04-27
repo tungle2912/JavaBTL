@@ -18,7 +18,7 @@ public class Plane implements IGame{
 
 	public Plane() {
 		this.image = Load.getImage("spaceship.png");
-		this.x = Constants.w_Frame - image.getWidth(null) / 2;
+		this.x = Constants.w_Frame/2 - image.getWidth(null) / 2;
 		this.y = Constants.H_Frame - image.getHeight(null) - 100;
 //		this.x=600;
 //		this.y=550;

@@ -14,7 +14,7 @@ public class Boom implements IGame {
 	private int speed;
 
 	public Boom(int x, int y) {
-		this.img = Load.getImage("boom3.png");
+		this.img = Load.getImage("boom.png");
 		this.x = x;
 		this.y = y;
 		this.speed = 5;

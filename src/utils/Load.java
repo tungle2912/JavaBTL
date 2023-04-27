@@ -15,12 +15,12 @@ import javax.swing.ImageIcon;
 
 public class Load {
 	public static Image getImage(String name) {
-		Image img = new ImageIcon(new Load().getClass().getResource("/Data/" + name)).getImage();
+		Image img = new ImageIcon(new Load().getClass().getResource("/data/img/" + name)).getImage();
 		return img;
 	}
 	public static void getAudio(String name) {
 		try {
-		    File soundFile = new File("src/Data/"+name);
+		    File soundFile = new File("src/data/sound/"+name);
 		    AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
 		    Clip clip = AudioSystem.getClip();
 		    clip.open(audioStream);

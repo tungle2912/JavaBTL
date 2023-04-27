@@ -9,37 +9,38 @@ import java.awt.event.MouseMotionListener;
 
 import utils.Constants;
 import utils.Load;
+import view.MyPanel;
 
 public class GameListenner extends MouseAdapter implements MouseMotionListener, MouseListener, KeyListener {
-	GameManager manager;
+	private MyPanel myPanel;
 	private long lastFireTime;
 	private long fireDelay;
 
-	public GameListenner(GameManager gamemanager) {
-		manager = gamemanager;
+	public GameListenner(MyPanel myPanel) {
+		this.myPanel=myPanel;
 		lastFireTime = 0;
 		fireDelay = 200;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		manager.getPlane().move(e.getX(), e.getY());
+		myPanel.getPlane().move(e.getX(), e.getY());
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFireTime >= fireDelay) {
 			Load.getAudio("fire.wav");
-			manager.getPlane().fire(manager.getArrBullet());
+			myPanel.getPlane().fire(myPanel.getArrBullet());
 			lastFireTime = currentTime;
 		}
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		manager.getPlane().move(e.getX(), e.getY());
+		myPanel.getPlane().move(e.getX(), e.getY());
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		manager.getPlane().fire(manager.getArrBullet());
+		myPanel.getPlane().fire(myPanel.getArrBullet());
 		Load.getAudio("fire.wav");
 	}
 
@@ -53,19 +54,19 @@ public class GameListenner extends MouseAdapter implements MouseMotionListener, 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A: {
-			manager.getPlane().moveLeft();
+			myPanel.getPlane().moveLeft();
 			break;
 		}
 		case KeyEvent.VK_S: {
-			manager.getPlane().moveDown();
+			myPanel.getPlane().moveDown();
 			break;
 		}
 		case KeyEvent.VK_D: {
-			manager.getPlane().moveRight();
+			myPanel.getPlane().moveRight();
 			break;
 		}
 		case KeyEvent.VK_W: {
-			manager.getPlane().moveUp();
+			myPanel.getPlane().moveUp();
 			break;
 		}
 //		case KeyEvent.VK_SPACE: {
@@ -80,7 +81,7 @@ public class GameListenner extends MouseAdapter implements MouseMotionListener, 
 			long currentTime = System.currentTimeMillis();
 			if (currentTime - lastFireTime >= fireDelay) {
 				Load.getAudio("fire.wav");
-				manager.getPlane().fire(manager.getArrBullet());
+				myPanel.getPlane().fire(myPanel.getArrBullet());
 				lastFireTime = currentTime;
 			}
 			break;

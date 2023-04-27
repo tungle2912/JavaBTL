@@ -17,24 +17,20 @@ public class Enemy implements IGame {
 	protected int speedY;
 	protected int count;
 	protected int hp;
+	protected int checkDirection;
+	protected int k;
 
 	public Enemy() {
 		Random r = new Random();
-		int k = r.nextInt(3);
-		if (k == 0) {
-			img = Load.getImage("enemy.png");
-		} else if (k == 1) {
-			img = Load.getImage("enemy3.png");
-		} else {
-			img = Load.getImage("enemy2.png");
-
-		}
+	    k = r.nextInt(3)+1;
+		img = Load.getImage("enemy"+k+".png");
 		int w = Constants.w_Frame - img.getWidth(null);
 		x = r.nextInt(w);
 		speedX = 1;
 		speedY = r.nextInt(3) + 1;
 		count = 0;
-		hp = 2;
+		hp = k;
+		checkDirection=r.nextInt(2);
 	}
 
 	public int getX() {
@@ -68,6 +64,14 @@ public class Enemy implements IGame {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
+    
+	public int getK() {
+		return k;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}
 
 	public boolean die() {
 		hp--;
@@ -81,7 +85,11 @@ public class Enemy implements IGame {
 
 	@Override
 	public void move() {
-		x += speedX;
+		if(checkDirection==0) {
+			x += speedX;
+		}else {
+			x-=speedX;
+		}
 		y += speedY;
 	}
 
